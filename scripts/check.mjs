@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import * as XLSX from 'xlsx';
+import {parseWorkbook} from '../lib/sheet.js';
+import directory,{config} from '../netlify/functions/directory.mjs';
+assert.equal(config.path,'/api/directory');
+const book=XLSX.utils.book_new();XLSX.utils.book_append_sheet(book,XLSX.utils.aoa_to_sheet([['NAME','LINK','PORTFOLIO IMAGE'],['FOOD'],['Test contact','https://example.com','https://example.com/work.jpg']]),'New tab');
+const parsed=parseWorkbook(XLSX.write(book,{type:'array',bookType:'xlsx'}));assert.equal(parsed[0].entries[0].image,'https://example.com/work.jpg');assert.equal(parsed[0].entries[0].section,'FOOD');
+const response=await directory(new Request('https://test.local/api/directory'));assert.equal(response.status,200);const data=await response.json();assert(data.groups.length>0);assert(data.groups.some(g=>g.entries.length>0));assert.equal(data.stale,false);assert.equal(response.headers.get('Cache-Control'),'no-store');
+const originalFetch=globalThis.fetch;globalThis.fetch=async()=>{throw Error('Network unavailable')};
+const cached=await directory(new Request('https://test.local/api/directory'));assert.equal(cached.status,200);assert.deepEqual((await cached.json()).groups,data.groups);
+assert.equal((await directory(new Request('https://test.local/api/directory',{method:'HEAD'}))).body,null);
+assert.equal((await directory(new Request('https://test.local/api/directory',{method:'POST'}))).status,405);
+const {default:cold}=await import('../netlify/functions/directory.mjs?cold');assert.equal((await cold(new Request('https://test.local/api/directory'))).status,503);globalThis.fetch=originalFetch;
+console.log('Passed: live sheet, image/tab parsing, cached reads, HEAD, write rejection and upstream failure.');
