@@ -15,7 +15,7 @@ Deploy the whole project through Git or the Netlify CLI. Uploading only the `pub
 
 https://docs.google.com/spreadsheets/d/1M_rLNXPx0IgnJ47l1HRQvpp9A9gCKLEjNn6AvicMb40/edit?usp=sharing
 
-Keep the sheet viewable by anyone with its link. Use `NAME`, `LINK` and `PORTFOLIO IMAGE` headers. Portfolio images should be directly accessible HTTP(S) image URLs, rather than a page containing an image. New tabs are discovered automatically. Other named columns appear as notes. Blank image cells show placeholders.
+Keep the sheet viewable by anyone with its link. Use `NAME`, `LINK` and `PORTFOLIO IMAGE` headers. Portfolio media should be directly accessible HTTP(S) image or .mp4 URLs, rather than a webpage. MP4 files play muted and loop in 4:5 cards; autoplay respects reduced-motion preferences. New tabs are discovered automatically. Other named columns appear as notes. Blank image cells show placeholders.
 
 ## Verify locally
 
