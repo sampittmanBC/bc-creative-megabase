@@ -15,7 +15,7 @@ Deploy the whole project through Git or the Netlify CLI. Uploading only the `pub
 
 https://docs.google.com/spreadsheets/d/1M_rLNXPx0IgnJ47l1HRQvpp9A9gCKLEjNn6AvicMb40/edit?usp=sharing
 
-Keep the sheet viewable by anyone with its link. Use `NAME`, `LINK` and `PORTFOLIO IMAGE` headers. Portfolio media should be directly accessible HTTP(S) image or .mp4 URLs, rather than a webpage. MP4 files play muted and loop in 4:5 cards; autoplay respects reduced-motion preferences. New tabs are discovered automatically. Other named columns appear as notes. Blank image cells show placeholders.
+Keep the sheet viewable by anyone with its link. Use `NAME`, `LINK` and `PORTFOLIO IMAGE` headers. Portfolio media should be directly accessible HTTP(S) image, .mp4, .webm or Vimeo URLs, rather than a webpage. MP4 and WebM files play muted and loop in 4:5 cards; autoplay respects reduced-motion preferences. New tabs are discovered automatically. Other named columns appear as notes. Blank image cells show placeholders.
 
 ## Verify locally
 
@@ -28,3 +28,5 @@ The existing ChatGPT-hosted site is unaffected. This package is ready for Netlif
 Black background, white text and lines, the full-width SVG logo, Neue Haas Unica at weight 500 through Adobe Fonts, 4:5 image cards, yellow website arrows beside names, sticky navigation with section headings that shrink on scroll, subsection filters, five-column desktop grids above 900px, the supplied favicon and live update status in the footer.
 
 Keep the entire repository together: the `netlify` and `lib` folders are required for the live sheet connection.
+
+Vimeo links embed the player in each card. Unlisted links must include the privacy hash. The video owner must allow embedding on your deployed domain.
