@@ -25,6 +25,6 @@ The existing ChatGPT-hosted site is unaffected. This package is ready for Netlif
 
 ## Included design
 
-Black background, white text and lines, the full-width SVG logo, Neue Haas Unica at weight 500 through Adobe Fonts, 4:5 image cards, yellow website arrows beside names, larger section headings and live update status in the footer.
+Black background, white text and lines, the full-width SVG logo, Neue Haas Unica at weight 500 through Adobe Fonts, 4:5 image cards, yellow website arrows beside names, sticky navigation with section headings that shrink on scroll, subsection filters, five-column desktop grids above 900px, the supplied favicon and live update status in the footer.
 
 Keep the entire repository together: the `netlify` and `lib` folders are required for the live sheet connection.
