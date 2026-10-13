@@ -1,14 +1,21 @@
 import assert from 'node:assert/strict';
+import {webcrypto} from 'node:crypto';
+import {handleAuth} from '../lib/auth.js';
+globalThis.crypto??=webcrypto;
+process.env.DIRECTORY_PASSWORD='test-only-password';process.env.SESSION_SECRET='test-only-secret-long-enough-for-tests';
+const signed=await handleAuth(new Request('https://test.local/api/login',{method:'POST',headers:{Origin:'https://test.local'},body:new URLSearchParams({password:process.env.DIRECTORY_PASSWORD})}),process.env);
+const cookie=signed.headers.get('set-cookie').split(';')[0];
+function directoryRequest(options={}){return new Request('https://test.local/api/directory',{...options,headers:{cookie,...options.headers}})}
 import * as XLSX from 'xlsx';
 import {parseWorkbook} from '../lib/sheet.js';
 import directory,{config} from '../netlify/functions/directory.mjs';
 assert.equal(config.path,'/api/directory');
 const book=XLSX.utils.book_new();XLSX.utils.book_append_sheet(book,XLSX.utils.aoa_to_sheet([['NAME','LINK','PORTFOLIO IMAGE'],['FOOD'],['Test contact','https://example.com','https://example.com/work.jpg']]),'New tab');
 const parsed=parseWorkbook(XLSX.write(book,{type:'array',bookType:'xlsx'}));assert.equal(parsed[0].entries[0].image,'https://example.com/work.jpg');assert.equal(parsed[0].entries[0].section,'FOOD');
-const response=await directory(new Request('https://test.local/api/directory'));assert.equal(response.status,200);const data=await response.json();assert(data.groups.length>0);assert(data.groups.some(g=>g.entries.length>0));assert.equal(data.stale,false);assert.equal(response.headers.get('Cache-Control'),'no-store');
+const response=await directory(directoryRequest());assert.equal(response.status,200);const data=await response.json();assert(data.groups.length>0);assert(data.groups.some(g=>g.entries.length>0));assert.equal(data.stale,false);assert.equal(response.headers.get('Cache-Control'),'no-store');
 const originalFetch=globalThis.fetch;globalThis.fetch=async()=>{throw Error('Network unavailable')};
-const cached=await directory(new Request('https://test.local/api/directory'));assert.equal(cached.status,200);assert.deepEqual((await cached.json()).groups,data.groups);
-assert.equal((await directory(new Request('https://test.local/api/directory',{method:'HEAD'}))).body,null);
-assert.equal((await directory(new Request('https://test.local/api/directory',{method:'POST'}))).status,405);
-const {default:cold}=await import('../netlify/functions/directory.mjs?cold');assert.equal((await cold(new Request('https://test.local/api/directory'))).status,503);globalThis.fetch=originalFetch;
+const cached=await directory(directoryRequest());assert.equal(cached.status,200);assert.deepEqual((await cached.json()).groups,data.groups);
+assert.equal((await directory(directoryRequest({method:'HEAD'}))).body,null);
+assert.equal((await directory(directoryRequest({method:'POST'}))).status,405);
+const {default:cold}=await import('../netlify/functions/directory.mjs?cold');assert.equal((await cold(directoryRequest())).status,503);globalThis.fetch=originalFetch;
 console.log('Passed: live sheet, image/tab parsing, cached reads, HEAD, write rejection and upstream failure.');

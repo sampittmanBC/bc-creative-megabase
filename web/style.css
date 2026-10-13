@@ -56,3 +56,14 @@ nav button[aria-selected=true],nav button[aria-selected=true]:hover{background:#
 .visual iframe{width:100%;height:100%;display:block;border:0;background:#000}
 
 .section-head{justify-content:space-between;flex-wrap:wrap}.section-head #count{margin-left:auto;color:#fff}
+
+.login-main{min-height:50vh;display:grid;place-items:center;padding:48px 24px}.login-form{width:min(100%,520px);padding:32px 0}.login-form h2{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 18px;font-weight:500}.login-form p{line-height:1.5}.login-form label{display:block;margin-top:32px;margin-bottom:10px}.login-controls{display:flex;gap:12px}.login-controls input{width:100%;min-width:0;background:#000;border:1px solid #fff;border-radius:0;color:#fff;padding:14px;font:inherit}.login-controls button,.logout-form button{background:#e6d115;color:#000;border:1px solid #e6d115;border-radius:0;font:inherit;padding:14px 24px;cursor:pointer}.login-error{min-height:24px}.logout-form{margin:0}.logout-form button{padding:8px 14px}@media(max-width:500px){.login-controls{flex-wrap:wrap}.login-controls button{width:100%}}
+
+footer{justify-content:center;align-items:center;flex-wrap:wrap;gap:20px 32px;text-align:center}
+
+@media(max-width:900px){.section-head{flex-direction:column;align-items:flex-start;gap:12px}.section-head #count{margin-left:0;padding-top:0;text-align:left}}
+
+@media(max-width:900px){#tabs{flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:12px 0}#tabs button{white-space:nowrap;flex-shrink:0;padding:12px}}
+
+.name-row{align-items:flex-start}.name-row h3{font-size:21px;line-height:1.15}.name-row .website-link{align-self:flex-start;font-size:21px;height:36px;margin-top:calc((1.15em - 36px)/2)}
+@media(max-width:560px){.name-row .website-link{height:32px;margin-top:calc((1.15em - 32px)/2)}}

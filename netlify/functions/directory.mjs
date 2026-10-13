@@ -1,8 +1,10 @@
 import { loadSheet } from '../../lib/sheet.js';
+import {authorised,locked} from '../../lib/auth.js';
 let cached = null;
 let pending = null;
 export default async function directory(request) {
   if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', {status:405,headers:{Allow:'GET, HEAD'}});
+  if(!await authorised(request,process.env))return locked(process.env);
   try {
     if (!cached || Date.now() - cached.time >= 45000) {
       if (!pending) pending = loadSheet().then(data => {cached={data,time:Date.now()};return {...data,stale:false}}).catch(error => {if(cached)return {...cached.data,stale:true};throw error}).finally(()=>pending=null);

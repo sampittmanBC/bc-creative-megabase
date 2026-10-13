@@ -30,3 +30,9 @@ Black background, white text and lines, the full-width SVG logo, Neue Haas Unica
 Keep the entire repository together: the `netlify` and `lib` folders are required for the live sheet connection.
 
 Vimeo links embed the player in each card. Unlisted links must include the privacy hash. The video owner must allow embedding on your deployed domain.
+
+## Password protection
+
+Before deploying, set DIRECTORY_PASSWORD to the agreed password and SESSION_SECRET to a random value of at least 32 bytes in Netlify environment variables, with Functions scope. Do not commit these values. Redeploy after setting them. Missing values lock the directory. Sessions last seven days; changing either value invalidates existing sessions. Sign out clears the browser session. The API requires the same signed cookie as the page.
+
+This protects the directory website, not the original public Google Sheet or third-party media URLs.
