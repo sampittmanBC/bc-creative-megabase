@@ -67,3 +67,5 @@ footer{justify-content:center;align-items:center;flex-wrap:wrap;gap:20px 32px;te
 
 .name-row{align-items:flex-start}.name-row h3{font-size:21px;line-height:1.15}.name-row .website-link{align-self:flex-start;font-size:21px;height:36px;margin-top:calc((1.15em - 36px)/2)}
 @media(max-width:560px){.name-row .website-link{height:32px;margin-top:calc((1.15em - 32px)/2)}}
+
+.visual iframe.vimeo-cover{position:absolute;left:50%;top:50%;width:222.222222%;height:100%;max-width:none;transform:translate(-50%,-50%);pointer-events:none}
